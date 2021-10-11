@@ -21,7 +21,6 @@ class DevelopmentConfig(Config):
     """
     DevelopmentConfig class containing development configuration, extending Config object
     """
-    ENV = "development"
     SECRET_KEY = os.environ.get("FLASK_DEVELOPMENT_SECRET_KEY")
     SESSION_COOKIE_NAME = "dev_session"
 
