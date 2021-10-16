@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/navbar.css') }}">
+{% endblock %}
+{% block content %}
+<div class="sidebar">
+    <div class="logo-details">
+        <i class='bx bxl-python icon' ></i>
+        <div class="logo-name">Spotigeek</div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list">
+        <li>
+            <a href="#">
+                <i class='bx bx-play-circle' ></i>
+                <span class="link-name">Now Playing</span>
+            </a>
+            <span class="tooltip">Now Playing</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-bar-chart' ></i>
+                <span class="link-name">Stats</span>
+            </a>
+            <span class="tooltip">Stats</span>
+        </li>
+    </ul>
+</div>
+
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+
+    closeBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        menuBtnChange();
+    });
+    
+    function menuBtnChange() {
+        if (sidebar.classList.contains("open")) {
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else {
+            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+<div class="sidebar">
+    <div class="logo-details">
+        <i class='bx bxl-python icon' ></i>
+        <div class="logo-name">Spotigeek</div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list">
+        <li>
+            <a href="#">
+                <i class='bx bx-play-circle' ></i>
+                <span class="link-name">Now Playing</span>
+            </a>
+            <span class="tooltip">Now Playing</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-bar-chart' ></i>
+                <span class="link-name">Stats</span>
+            </a>
+            <span class="tooltip">Stats</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog' ></i>
+                <span class="link-name">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+        </li>
+        <li class="app-info">
+            <div class="app-details">
+                <i class='bx bxl-spotify logo'></i>
+                <div class="info">
+                    <div class="name">Spotigeek</div>
+                    <div class="developer">Thomas de Lange</div>
+                </div>
+            </div>
+            <a class="log-out" href="{{ url_for('main.logout') }}">
+                <i class='bx bx-log-out' id="log_out" ></i>
+            </a>
+            <span class="tooltip">Logout</span>
+        </li>
+    </ul>
+</div>

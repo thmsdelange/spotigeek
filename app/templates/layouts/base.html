@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <!-- Boxicons CDN -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- Stylesheet base CSS -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/base.css') }}">
+    <!-- Sylesheet if sidebar -->
+    {% if sidebar %}
+        {% if sidebar==True %}
+            <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/sidebar.css') }}">
+        {% endif %}
+    {% endif %}
+    <title>Spotigeek</title>
+
+    <!-- Load head -->
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <!-- Load html if sidebar -->
+    {% if sidebar %}
+        {% if sidebar==True %}
+            {% include "layouts/sidebar.html" %}
+        {% endif %}
+    {% endif %}
+    
+    <main>
+        <!-- Load main -->
+        {% block main %}
+        {% endblock %}
+    </main>
+    
+    <!-- Load script if sidebar -->
+    {% if sidebar %}
+        {% if sidebar==True %}
+            <script src="{{url_for('static', filename='js/sidebar.js')}}"></script>
+        {% endif %}
+    {% endif %}
+</body>

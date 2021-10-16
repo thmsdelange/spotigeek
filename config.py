@@ -1,6 +1,4 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 class Config(object):
     """
@@ -8,7 +6,6 @@ class Config(object):
     """
     TESTING = False
     SESSION_COOKIE_NAME = "session"
-    
     
 class ProductionConfig(Config):
     """
@@ -30,3 +27,11 @@ class TestingConfig(DevelopmentConfig):
     """
     TESTING = True
     SESSION_COOKIE_NAME = "test_session"
+
+def get_config(flask_env):
+    configs = {
+        'production': ProductionConfig,
+        'development': DevelopmentConfig,
+        'testing': TestingConfig
+    }
+    return configs.get(flask_env, "Invalid flask_env")

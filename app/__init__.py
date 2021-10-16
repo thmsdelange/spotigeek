@@ -1,14 +1,15 @@
 from flask import Flask
+from config import get_config
 from app.main.views import main
+from app.test.views import test
+
+import os
 
 def create_app():
     app = Flask(__name__)
-    if app.config['ENV'] == 'production':
-        app.config.from_object('config.ProductionConfig')
-    elif app.config['ENV'] == 'testing':
-        app.config.from_object('config.TestingConfig')
-    elif app.config['ENV'] == 'development':
-        app.config.from_object('config.DevelopmentConfig')
+    flask_env = os.environ.get("FLASK_ENV")
+    app.config.from_object(get_config(flask_env))
     
     app.register_blueprint(main)
+    app.register_blueprint(test, url_prefix='/test')
     return app

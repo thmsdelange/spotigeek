@@ -1,0 +1,33 @@
+@import './constants';
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@5.2/distr/fira_code.css);
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	position: relative;
+	min-height: 100vh;
+	width: 100%;
+	overflow: hidden;
+	font-family: 'Fira Code', monospace;
+	color: $primaryTextColor;
+}
+main {
+	position: relative;
+	background: $primaryColor;
+	min-height: 100vh;
+	top: 0;
+	left: 78px;
+	width: calc(100% - 78px);
+	transition: all 0.5s ease;
+	z-index: 2;
+}
+.sidebar.open {
+	~ {
+		main {
+			left: 250px;
+			width: calc(100% - 250px);
+		}
+	}
+}
