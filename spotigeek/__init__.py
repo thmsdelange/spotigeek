@@ -1,7 +1,7 @@
 from flask import Flask
 from config import get_config
-from app.main.views import main
-from app.test.views import test
+from spotigeek.app.main.views import main
+from spotigeek.app.test.views import test
 
 import os
 

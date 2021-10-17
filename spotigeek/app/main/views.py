@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from spotipy import SpotifyOAuth, Spotify
 from functools import wraps
 from time import sleep, time
-main = Blueprint('main', __name__, template_folder="../templates/main")
+main = Blueprint('main', __name__, template_folder="../../templates/main")
 
 def auth_required(f):
     """
@@ -40,8 +40,8 @@ def index():
     spotify = Spotify(auth=session.get('token_data').get('access_token'))
     now_playing = spotify.current_user_playing_track()
     if now_playing:
-        df_np = DataFrame(now_playing)
-        print(df_np)
+        # df_np = DataFrame(now_playing)
+        # print(df_np)
         np = {'album_name': now_playing['item']['album']['name'],
                 'album_img': now_playing['item']['album']['images'][0]['url'],
                 'artist': now_playing['item']['artists'][0]['name'],
