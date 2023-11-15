@@ -12,10 +12,8 @@
     <!-- Stylesheet base CSS -->
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/base.css') }}">
     <!-- Sylesheet if sidebar -->
-    {% if sidebar %}
-        {% if sidebar==True %}
-            <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/sidebar.css') }}">
-        {% endif %}
+    {% if sidebar and sidebar==True %}
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/sidebar.css') }}">
     {% endif %}
     <title>Spotigeek</title>
 
@@ -25,10 +23,8 @@
 </head>
 <body>
     <!-- Load html if sidebar -->
-    {% if sidebar %}
-        {% if sidebar==True %}
-            {% include "layouts/sidebar.html" %}
-        {% endif %}
+    {% if sidebar and sidebar==True %}
+        {% include "layouts/sidebar.html" %}
     {% endif %}
     
     <main>
@@ -38,9 +34,7 @@
     </main>
     
     <!-- Load script if sidebar -->
-    {% if sidebar %}
-        {% if sidebar==True %}
-            <script src="{{url_for('static', filename='js/sidebar.js')}}"></script>
-        {% endif %}
+    {% if sidebar and sidebar==True%}
+        <script src="{{url_for('static', filename='js/sidebar.js')}}"></script>
     {% endif %}
 </body>

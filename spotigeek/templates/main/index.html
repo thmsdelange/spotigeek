@@ -5,32 +5,43 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 {% endblock %}
 {% block main %}
-<section id="particles-js" class="now-playing">
+<section id="particles" class="now-playing">
     <div class="container">
         <div class="album-container">
+          {% if 'error' not in now_playing %}
             <div class="album">
                 <div class="frontside">
-                    <img src="{{ np['album_img'] }}">
+                    <img src="{{ now_playing['album_img'] }}">
                 </div>
                 <div class="backside">
-                    <p>backside</p>
+                  <div class="track-details">
+                    <h1>Tracks</h1>
+                    <ul>
+                      {% for number, track in now_playing['album_tracks'].items() %}
+                        <li class="track{% if number|string == now_playing['track_number']|string %} current{% endif %}">
+                          <span class="name">{{ "%02.f"|format(number|float) }}. {{ track['name'] }}</span>
+                          <span class="duration"> - [{{ track['duration'] }}]</span>
+                        </li>
+                      {% endfor %}
+                      </ul>
+                  </div>
+                  <div class="album-details">
+                    <h1 class="name">{{ now_playing['album_name'] }}</h1>
+                    <p>{{ now_playing['album_artists'] }} . {{ now_playing['album_release_year'] }}</p>
+                  </div>
                 </div>
             </div>
+          {% else %}
+            <h1>Start playing some music!</h1>
+          {% endif %}
         </div>
     </div>
-    <!-- {% if np %}
-        <h1>{{ np['song'] }}</h1>
-        <h3>{{ np['artist'] }}</h3>
-        <img src="{{ np['album_img'] }}">
-    {% endif %} -->
 </section>
-<!-- <section>
-  <div class="container">
+<section>
     <h1>Stats</h1>
-  </div>
-</section> -->
+</section>
 <script>
-    particlesJS("particles-js", {
+    particlesJS("particles", {
   "particles": {
     "number": {
       "value": 355,

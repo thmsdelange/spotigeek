@@ -53,14 +53,12 @@ $tooltipPos: calc(100% + 15px);
 	li {
 		position: relative;
 		margin: 8px 0;
-		list-style: none;
 		a {
 			display: flex;
 			height: 100%;
 			width: 100%;
 			border-radius: 12px;
 			align-items: center;
-			text-decoration: none;
 			transition: all 0.4s ease;
 			background: $secondaryColor;
 			.link-name {

@@ -1,55 +1,24 @@
-from flask import Blueprint, redirect, url_for, request, session, render_template, flash
+from flask import Blueprint, redirect, url_for, request, session, render_template, flash, jsonify
 from pandas import DataFrame
 import os
 from dotenv import load_dotenv
 from spotipy import SpotifyOAuth, Spotify
-from functools import wraps
 from time import sleep, time
+import json
+
+from spotigeek.app.main.decorators import auth_required, check_token_expired
+from spotigeek.app.main.functions import create_spotify_oauth, get_now_playing
+
 main = Blueprint('main', __name__, template_folder="../../templates/main")
-
-def auth_required(f):
-    """
-    Checks if user has authorized spotify to access user data.
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get('token_data', None):
-            flash("Not authorized")
-            return redirect(url_for('main.auth'))
-        return f(*args, **kwargs)
-    return decorated_function
-
-def check_token_expired(f):
-    """
-    Checks if access token needs to be refreshed and creates a new access token if necessary. Must be used after @auth_required
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        token_data = session.get('token_data')
-        if token_data.get('expires_at') - int(time()) < 60:
-            spotify_oauth = create_spotify_oauth()
-            spotify_oauth.refresh_access_token(token_data.get('refresh_token'))
-            return redirect(url_for('main.auth'))
-        return f(*args, **kwargs)
-    return decorated_function
 
 @main.route('/')
 @auth_required
 @check_token_expired
 def index():
     spotify = Spotify(auth=session.get('token_data').get('access_token'))
-    now_playing = spotify.current_user_playing_track()
-    if now_playing:
-        # df_np = DataFrame(now_playing)
-        # print(df_np)
-        np = {'album_name': now_playing['item']['album']['name'],
-                'album_img': now_playing['item']['album']['images'][0]['url'],
-                'artist': now_playing['item']['artists'][0]['name'],
-                'song': now_playing['item']['name']}
-        print(np)
-        return render_template("index.html", np=np, sidebar=True)
-    else:
-        return "Nothing to play"
+    now_playing = get_now_playing(spotify).get_json()
+    # print(now_playing)
+    return render_template("index.html", sidebar=True, now_playing=now_playing)
 
 @main.route('/authorize')
 def auth():
@@ -82,9 +51,12 @@ def top():
     user_top = spotify.current_user_top_tracks(limit=50, time_range="long_term")
     return {"top": user_top['items']}
 
-def create_spotify_oauth():
-    return SpotifyOAuth(
-            client_id=os.environ.get("SPOTIFY_CLIENT_ID"),
-            client_secret=os.environ.get("SPOTIFY_CLIENT_SECRET"),
-            redirect_uri=url_for('main.callback', _external=True),
-            scope='playlist-read-private user-read-private user-read-currently-playing user-library-read user-top-read')
+@main.route('/now-playing')
+@auth_required
+@check_token_expired
+def now_playing():
+    sp = Spotify(auth=session.get('token_data').get('access_token'))
+    np = get_now_playing(sp)
+    # np = sp.current_user_playing_track()
+    # album = sp.album_tracks("3cLQ49Ll3nGRkw3HSSk92K")
+    return np

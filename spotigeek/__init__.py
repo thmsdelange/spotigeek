@@ -4,6 +4,8 @@ from spotigeek.app.main.views import main
 from spotigeek.app.test.views import test
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
