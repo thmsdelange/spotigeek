@@ -10,7 +10,10 @@ Clone the repository
 ```
 git clone https://github.com/thmsdelange/spotigeek.git
 ```
-
+Install the Python dependencies
+```
+python -mpip install -r requirements.txt
+```
 Create a `.env` file (see `.env.example`) and set the secrets and spotify tokens. Then run `flask run` to start the server and navigate to `http://127.0.0.1:5000/` to view the application.
 
 ## License
